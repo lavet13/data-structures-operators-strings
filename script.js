@@ -4,19 +4,26 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
+// ES6 compute property names instead of having to write them out manually and literally. (SOLVE Third enhancement)
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const [, , , thu, fri, sat] = weekdays;
+
 const openingHours = {
-  thu: {
+  [thu]: {
     open: 12,
     close: 22,
   },
-  fri: {
+  [fri]: {
     open: 11,
     close: 23,
   },
-  sat: {
+  [sat]: {
     open: 0, // Open 24 hours
     close: 24,
   },
+  // FIXME if it returns null?
+  // SOLVE it doesn't instead returns undefined
+  deb: null,
 };
 
 // Data needed for first part of the section
@@ -28,13 +35,15 @@ const restaurant = {
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
   // openingHours: openingHours, // before ES6 we would have to write like this
 
-  // ES6 enhanced object literals, so we took that opening hours object and put it here and it is created a property name with exactly that variable name
-  openingHours, // so with enhanced object literals you can easily write this way
+  // ES6 enhanced object literals(SOLVE First enhancement)
+  openingHours,
 
+  // old way to write function expression to the property
   // order: function (starterIndex, mainIndex) {
   //   return [(this.starterMenu[starterIndex], this.mainMenu[mainIndex])];
   // },
 
+  // ES6 writing methods(SOLVE Second enhancement) which allows us to instead of creating a property and set it to a function expression just write a method as if we would create one in a class (ES6)
   order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
@@ -63,7 +72,39 @@ const restaurant = {
   },
 };
 ///////////////////////////////////////////
+// Optional Chaining (?.) ES2020 introduced optional chaining which checks if a certain property does not exist, then UNDEFINED is returned immediately;
+
+if (restaurant.openingHours && restaurant.openingHours.mon)
+  console.log(restaurant.openingHours.mon.open);
+// restaurant.openingHours.mon && console.log(restaurant.openingHours.mon.open); // doesn't not exist
+// restaurant.openingHours.fri && console.log(restaurant.openingHours.fri.open); // exists
+
+// WITH optional chaining
+console.log(restaurant.openingHours.mon?.open); // nullish concept, a property exists if it's not null and not undefined, so if it's zero or the empty string then it still exists of course;
+console.log(restaurant.openingHours?.mon?.open);
+console.log(restaurant.openingHours.deb?.open); // checks the property before question mark (?.), if it doesn't exist it should returns an UNDEFINED, as if it was short circuiting, otherwise it goes after question mark and do whatever it is, calling a method or just sets a property or returns one
+
+// Example
+const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of days) {
+  const open = restaurant.openingHours[day]?.open;
+
+  open ?? console.log(`On ${day}, we open at ${open}`); // ?? console.log(`test`) // it's just trying to catch both undefined and null
+
+  // open || console.log(`On ${day}, we open at ${open}`); // it's also try to catch 0 and empty string along with undefined and null
+
+  // !open || console.log(`On ${day}, we open at ${open}`); // this is similar as beneath here
+  open && console.log(`On ${day}, we open at ${open}`);
+  open === 0 && console.log(`On ${day}, we open at ${open}`);
+}
+
+///////////////////////////////////////////
 // Enhanced Object literals
+
+// ES6 enhanced object literals(SOLVE First enhancement)
+// ES6 writing methods(SOLVE Second enhancement) which allows us to instead of creating a property and set it to a function expression just write a method as if we would create one in a class (ES6)
+// ES6 compute property names instead of having to write them out manually and literally. (SOLVE Third enhancement)
 
 /*
 ///////////////////////////////////////////
@@ -89,7 +130,6 @@ console.log(Object.fromEntries([...menu.entries()])); // convert to object
 /*
 ///////////////////////////////////////////
 // 3 new logical assignment operators were introduced in ES2021
-
 const rest1 = {
   name: 'Capri',
   // numGuests: 20,
@@ -100,12 +140,11 @@ const rest2 = {
   name: 'La Piazza',
   owner: 'Giovanni Rossi',
 };
-
 // OR assignment operator
 // rest2.numGuests = rest2.numGuests ? rest2.numGuests : 10;
 
-// rest1.numGuests = rest1.numGuests || 10; // stops when it finds truthy value in case OR operator, for ADD operator - falsy value
-// rest2.numGuests = rest2.numGuests || 10; // stops when it finds truthy value in case OR operator, for ADD operator - falsy value
+// rest1.numGuests = rest1.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for ADD operator - falsy value
+// rest2.numGuests = rest2.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for ADD operator - falsy value
 // rest1.numGuests ||= 10;
 // rest2.numGuests ||= 10;
 
@@ -113,17 +152,20 @@ const rest2 = {
 rest1.numGuests ??= 10;
 rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string).
 
-// AND assignment operator
+// AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
 // rest2.owner = rest2.owner && '<ANONYMOUS>';
 
+// AND assignment operator
 // so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical add assignment operator
-rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returns an undefined if it didn't find a property and instead of it actually didn't do anything lule
-rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical and assignment operator does is to assign a value to a variable if it is currently truthy;
+// FIXME try to create a property with value of undefined or null, test it
+// SOLVE so if it exists and also has a value of null or undefined it will simply do nothing
+rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
+rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical and assignment operator does is to assign a value to a variable if it is currently truthy
 
 console.log(rest1);
 console.log(rest2);
-*/
+ */
 
 /*
 ////////////////////////////////////////////////////////////////////
@@ -145,7 +187,7 @@ console.log(guestCorrect);
 console.log('------ OR ------');
 
 // there are three properties about logical operators: Use ANY data type, return ANY data type, short-circuiting(also call it short circuit evaluation)
-// In case OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value, so if the first operand is truthy value in the OR operator, then the other operand will not even be evaluated.
+// In case OR operator, short circuiting means that if the first value is a truthy value, it will immediately return that first value, then the other operand will not even be evaluated.
 console.log(3 || 'Jonas'); // 3
 console.log('' || 'Jonas'); // Jonas
 console.log(true || 0); // true
