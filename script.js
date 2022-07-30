@@ -23,7 +23,7 @@ const openingHours = {
   },
   // FIXME if it returns null?
   // SOLVE it doesn't instead returns undefined
-  deb: null,
+  deb: null, // so that's the optional chaining (?.)
 };
 
 // Data needed for first part of the section
@@ -134,12 +134,14 @@ const rest1 = {
   name: 'Capri',
   // numGuests: 20,
   numGuests: 0,
+  owner: null,
 };
 
 const rest2 = {
   name: 'La Piazza',
   owner: 'Giovanni Rossi',
 };
+
 // OR assignment operator
 // rest2.numGuests = rest2.numGuests ? rest2.numGuests : 10;
 
@@ -159,9 +161,9 @@ rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will a
 // AND assignment operator
 // so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical add assignment operator
 // FIXME try to create a property with value of undefined or null, test it
-// SOLVE so if it exists and also has a value of null or undefined it will simply do nothing
+// SOLVE so if it exists and also has a value of null or undefined it will simply be reassigned or won't do anything
 rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
-rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical and assignment operator does is to assign a value to a variable if it is currently truthy
+rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical AND assignment operator does is to assign a value to a variable if it is currently truthy
 
 console.log(rest1);
 console.log(rest2);
@@ -217,7 +219,7 @@ if (restaurant.orderPizza) {
   restaurant.orderPizza('mushrooms', 'spinach');
 }
 
-// if the first operand is a falsy value, then the entire AND operation will actually be undefined(in the case of objects)... otherwise it's gonna be the second operand, so it means is that the code above is similiar to what we wrote here
+// if the first operand is a falsy value, then the entire AND operation will be return this falsy value... otherwise it's gonna be the second operand, so it means is that the code above is similiar to what we wrote here
 console.log(
   restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach')
 );
@@ -286,7 +288,7 @@ const add = function (...array) {
   });
 };
 
-// SOLVE rest pattern is still an array, in case with functions, but in destructuring assignment it will be either array or object, depending on what we are currently have
+// SOLVE rest pattern is still an array, in case with functions, but in destructuring assignment it will be either array or object, depending on what we are currently using
 const testObj = {
   a: 2,
   b: 3,
@@ -297,7 +299,7 @@ const testObj = {
 // console.log(add(5, 3, 7, 2));
 // console.log(add(8, 2, 5, 3, 2, 1, 4));
 // console.log(add([1, 2, 3]));
-add(...testObj); // so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings, also we have maps and sets but we don't even know what exactly they are LULE, WITH OBJECTS DOESN'T WORK AT ALL
+add(...testObj); // so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings, also we have maps and sets but we don't even know what exactly they are LULE.
 
 const x = [23, 5, 7];
 add(...x);
@@ -308,7 +310,7 @@ restaurant.orderPizza('mushrooms');
 */
 
 /*
-// Spread Operator(building new arrays based on previous one and also passing multiple values into a function, and in both cases, we use the spread operator to expand an array into individual elements)
+// Spread Operator(building new arrays based on previous one and also passing multiple values into a function, and in both cases, we use the spread operator to expand an array into individual elements; NOTE: spread operator doesn't work with objects when we would try to use it to pass elements into a function)
 const arr = [7, 8, 9];
 const badNewArray = [1, 2, arr[0], arr[1], arr[2]];
 console.log(badNewArray);
@@ -361,20 +363,24 @@ console.log(newRestaurant);
 // Shallow copy of the original object, restaurant in this case, and modified name of the restaurant;
 // const restaurantCopy = Object.assign({}, restaurant);
 const restaurantCopy = { ...restaurant };
+
 const {
   starterMenu: deb1,
   mainMenu: deb2,
   name: naimenovanie,
+  location: loc,
   ...restaurantCopy2
 } = { ...restaurant };
 
-restaurantCopy.name = 'Ristorante Roma';
-console.log(restaurantCopy.name);
+// restaurantCopy.name = 'Ristorante Roma';
+// console.log(restaurantCopy.name);
 console.log(restaurant.name);
 console.log(restaurantCopy2);
 console.log(deb1);
 console.log(deb2);
+console.log(loc);
 console.log(naimenovanie);
+
 
 // FIXME try to switch values using destructure assignment which are wrapped by curly braces
 // SOLVE only works with square brackets
@@ -474,11 +480,13 @@ console.log(starterElement, mainElement);
 const nested = [2, 4, [5, 6]];
 const [first, , [third, fourth]] = nested;
 console.log(first, third, fourth);
+*/
 
 // Default values
-const [p = -1, q = -1, r = -1] = [8];
-const [o, u, i] = [9];
-console.log(o, u, i);
-console.log(p, q, r);
-console.log(p);
-*/
+const [p = -1, q = -1, r = -1] = [8]; // 8 -1 -1
+const [o, u, i] = [9]; // 9 undefined undefined
+console.log(o, u, i); // undefined if it didn't find a value
+console.log(p, q, r); // default values will be assigned(-1 in this case) if it didn't find a value
+console.log(p); // 8
+/*
+ */
