@@ -6,7 +6,7 @@ const flights =
 
 // ES6 compute property names instead of having to write them out manually and literally. (SOLVE Third enhancement)
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const [, , , thu, fri, sat] = weekdays;
+const [, , , thu, fri, sat, sun] = weekdays;
 
 const openingHours = {
   [thu]: {
@@ -21,6 +21,7 @@ const openingHours = {
     open: 0, // Open 24 hours
     close: 24,
   },
+  [sun]: 0,
   // FIXME if it returns null?
   // SOLVE it doesn't instead returns undefined
   deb: null, // so that's the optional chaining (?.)
@@ -88,9 +89,10 @@ console.log(restaurant.openingHours.deb?.open); // checks the property before qu
 const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 
 for (const day of days) {
-  const open = restaurant.openingHours[day]?.open;
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(open);
 
-  open ?? console.log(`On ${day}, we open at ${open}`); // ?? console.log(`test`) // it's just trying to catch both undefined and null
+  // open ?? console.log(`On ${day}, we open at ${open}`); // ?? console.log(`test`) // it's just trying to catch both undefined and null
 
   // open || console.log(`On ${day}, we open at ${open}`); // it's also try to catch 0 and empty string along with undefined and null
 
@@ -98,6 +100,19 @@ for (const day of days) {
   open && console.log(`On ${day}, we open at ${open}`);
   open === 0 && console.log(`On ${day}, we open at ${open}`);
 }
+
+// Optional Chaining WITH Methods
+console.log(restaurant.order?.(0, 0) ?? 'Method does not exist');
+console.log(restaurant.orderRisotto?.(0, 0) ?? 'Method does not exist');
+
+// Optional Chaining WITH Arrays
+const users = [{ email: 'hello@jonas.io' }];
+// const users = []; // Empty array
+
+// console.log(users[1]?.name ?? "User array empty or property doesn't exist");
+
+if (users.length > 0) console.log(users[0].name ?? "Property doesn't exist");
+else console.log('User array empty');
 
 ///////////////////////////////////////////
 // Enhanced Object literals
@@ -480,7 +495,6 @@ console.log(starterElement, mainElement);
 const nested = [2, 4, [5, 6]];
 const [first, , [third, fourth]] = nested;
 console.log(first, third, fourth);
-*/
 
 // Default values
 const [p = -1, q = -1, r = -1] = [8]; // 8 -1 -1
@@ -488,5 +502,4 @@ const [o, u, i] = [9]; // 9 undefined undefined
 console.log(o, u, i); // undefined if it didn't find a value
 console.log(p, q, r); // default values will be assigned(-1 in this case) if it didn't find a value
 console.log(p); // 8
-/*
  */
