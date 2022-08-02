@@ -72,6 +72,48 @@ const restaurant = {
     return 1;
   },
 };
+
+/*
+//////////////////////////////////////////////////////
+// Looping Objects; Object Keys, Values and Entries
+
+// Property Names
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+let openStr = `We are open on ${properties.length} days: `;
+
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+// Property Values
+const values = Object.values(openingHours);
+console.log(values);
+
+// Entire Object
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (let x of entries) {
+  // actually why did i write this
+  x = x.filter(value => {
+    if (value === 0) return true;
+    return value ?? false;
+  });
+  // no idea...
+
+  const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
+  if (!value) continue;
+
+  const { open, close } = value;
+
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+*/
+
+/*
 ///////////////////////////////////////////
 // Optional Chaining (?.) ES2020 introduced optional chaining which checks if a certain property does not exist, then UNDEFINED is returned immediately;
 
@@ -109,11 +151,11 @@ console.log(restaurant.orderRisotto?.(0, 0) ?? 'Method does not exist');
 const users = [{ email: 'hello@jonas.io' }];
 // const users = []; // Empty array
 
-// console.log(users[1]?.name ?? "User array empty or property doesn't exist");
+console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 
-if (users.length > 0) console.log(users[0].name ?? "Property doesn't exist");
-else console.log('User array empty');
-
+// if (users.length > 0) console.log(users[0].name ?? "Property doesn't exist");
+// else console.log('User array empty');
+*/
 ///////////////////////////////////////////
 // Enhanced Object literals
 
@@ -193,8 +235,10 @@ restaurant.numGuests = 0;
 const guests = restaurant.numGuests || 10;
 console.log(guests);
 
-// Nullish: null and undefined. That's it, it does not include a zero or the empty string, so basically for the nullish coalescing operator, it is as if the zero and the empty string were not falsy values and were instead truthy values as well; it does work with the principle of nullish values, and all the nullish values will short circuit the evaluation, so only if it was the null or undefined then the second operand would be executed and returned;
+// Nullish: null and undefined. That's it, it does not include a zero or the empty string, so basically for the nullish coalescing operator, it is as if the zero and the empty string were not falsy values and were instead truthy values as well; it does work with the principle of nullish values, and all the truthy values will short circuit the evaluation, so only if it was the null or undefined then the second operand would be executed and returned;
+
 const guestCorrect = restaurant.numGuests ?? 10; // it pretends that the empty string and zero are truthy values, but in the case of OR operator, it's not
+
 console.log(guestCorrect);
 */
 
