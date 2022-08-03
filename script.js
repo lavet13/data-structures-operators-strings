@@ -164,13 +164,13 @@ for (let x of entries) {
   // no idea...
 
   const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
-  if (!value) continue;
+  if (!value) continue; // because you can't destructure object if it not an object at all, like in my case i had zero and null
 
   const { open, close } = value;
 
   console.log(`On ${key} we open at ${open} and close at ${close}`);
 }
-*/
+ */
 
 /*
 ///////////////////////////////////////////
