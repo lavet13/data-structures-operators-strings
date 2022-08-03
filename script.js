@@ -73,6 +73,65 @@ const restaurant = {
   },
 };
 
+//////////////////////////////////////////////////////
+// Sets (ESX, two more data structures were finally introduced and that are sets and maps(in another lecture))
+// a set is basically just a collection of unique values, so that means that a set can never have any duplicates.
+
+// NOTE: so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings
+
+// Iterables are arrays, strings, maps and sets, but NOT objects
+// we need to pass iterables in our set
+const ordersSet = new Set([
+  'Pasta',
+  'Pizza',
+  'Pizza',
+  'Risotto',
+  'Pasta',
+  'Pizza',
+]);
+
+console.log(ordersSet);
+console.log(ordersSet.size);
+console.log(ordersSet.has('Pasta'));
+console.log(ordersSet.has('Bread'));
+ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread'); // the second was ignored
+ordersSet.delete('Risotto'); // deleting Risotto
+// ordersSet.clear(); // delete all elements of a set
+console.log(ordersSet);
+// in sets there are actually no indexes;
+// and in fact, there is no way of getting values out of a set, and if we think about this, then it makes sense;
+// so there's really no need for getting data out of a set. That's because if all values are unique, and if their order does not matter, then there is no point of retrieving values out of a set, all we need to know is whether a certain value is in the set or not;
+
+// if your goal is to actually store values in order and then retrieve it, then the best use case, is to just use an array, you wouldn't use a set for that and so again, there's no need for getting values out of a set, because if you need it, then you will just use an array;
+
+// so as he said in the beginning, sets are also iterables, and therefore we can loop over them;
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+// big use case for them, so in a normal code base, the main use case of sets is actually to remove duplicate values of arrays;
+// EXAMPLE
+const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']; // basically an iterable
+// for some reason, we are interested in knowing only which different positions there are in our restaurant, or in other words, we would basically like to have a unique values of the array, so without all the duplicates;
+console.log(staff);
+
+// the conversion from a set to an array is pretty easy, because they're both iterables, so remember from earlier that the spread operator works on all iterables, so that includes sets
+const staffUnique = [...new Set(staff)]; // pass iterable(array) into a set, and then unpack the entire set to create an array based on that set, so these elements from the set would be unpacked as if they were an individual elements separated by commas
+// so if a certain data structure is an iterable, that means that we can use "spread operator" and "for of" loop for example, and also in a specific situation we would use the rest pattern along with spread operator maybe
+console.log(staffUnique);
+
+// the same could even be done with counting how many different letters there are in a string, because string is also an iterable;
+console.log('jonasschmedtmann'.length); // 16
+console.log(new Set('jonasschmedtmann').size); // 11 unique characters
+
+const teacher = new Set('Jonas');
+
+console.log(teacher); // it looks familiar to what did with strings by using spread operator
+console.log(teacher.size);
+
+// So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays, that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique and it's also very easy to interact with sets by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values, but besides(помимо, кроме того) that, you can just continue using arrays;
+
 /*
 //////////////////////////////////////////////////////
 // Looping Objects; Object Keys, Values and Entries
