@@ -74,6 +74,57 @@ const restaurant = {
 };
 
 //////////////////////////////////////////////////////
+// Maps(Fundamentals)
+
+// a map is a data structure that we can use to map values to keys, so just like an object, data is stored in key value pairs in maps, the big diff between objects and maps is that in maps, the keys can have any type and this can be huge, basically in objects we always have string as a property, but in maps we can have any type of key such as objects, arrays, or other maps.
+
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(4, 'Lisbon, Portugal'));
+
+// as rest returns updated map, we can use chaining
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
+
+// in order to read data from a map we use the get method
+console.log(rest.get('name'));
+// console.log(rest.get('true')); // undefined, because data type of the key matters
+console.log(rest.get(true));
+// console.log(rest.get('1')); // likewise as with 'true'
+console.log(rest.get(1));
+
+const time = 10;
+console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // first and second operands are booleans, so entire result of this OR operation will be either true or false
+
+// as with sets we have the same method 'has'
+console.log(rest.has('categories')); // true, so we trying to find element based on the key, and it returns boolean value, objects do also have a method which is called hasOwnProperty
+
+// Now comparing to objects we can actually delete properties from objects using something called "delete" operator but, that's a really slow process and usually it's not encouraged to do that.
+console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not
+// rest.clear(); // remove all the elements from the map
+
+const arr = [1, 2]; // now it's gonna work because it's contain address of the array in the heap
+// use keys as arrays or objects
+rest.set(arr, 'Test');
+rest.set(document.querySelector('h1'), 'Heading');
+
+console.log(rest);
+console.log(rest.size);
+
+console.log(rest.get(arr)); // undefined, the reason is that these two arrays are actually not the same object
+
+// as always it's an iterable so we can use for of loop and spread operator
+// for (let value of rest) {
+//   console.log(value);
+// }
+
+/*
+//////////////////////////////////////////////////////
 // Sets (ESX, two more data structures were finally introduced and that are sets and maps(in another lecture))
 // a set is basically just a collection of unique values, so that means that a set can never have any duplicates.
 
@@ -91,11 +142,11 @@ const ordersSet = new Set([
 ]);
 
 console.log(ordersSet);
-console.log(ordersSet.size);
-console.log(ordersSet.has('Pasta'));
-console.log(ordersSet.has('Bread'));
+console.log(ordersSet.size); // 3 unique values
+console.log(ordersSet.has('Pasta')); // true
+console.log(ordersSet.has('Bread')); // false
 ordersSet.add('Garlic Bread');
-ordersSet.add('Garlic Bread'); // the second was ignored
+ordersSet.add('Garlic Bread'); // the second will be ignored
 ordersSet.delete('Risotto'); // deleting Risotto
 // ordersSet.clear(); // delete all elements of a set
 console.log(ordersSet);
@@ -110,6 +161,11 @@ for (const order of ordersSet) {
   console.log(order);
 }
 
+// doesn't work i mean it didn't even entry the "for in" loop, even though it didn't come out with error
+for (const order in ordersSet) {
+  console.log(order, ordersSet[order]);
+}
+
 // big use case for them, so in a normal code base, the main use case of sets is actually to remove duplicate values of arrays;
 // EXAMPLE
 const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']; // basically an iterable
@@ -117,8 +173,9 @@ const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']; // basi
 console.log(staff);
 
 // the conversion from a set to an array is pretty easy, because they're both iterables, so remember from earlier that the spread operator works on all iterables, so that includes sets
-const staffUnique = [...new Set(staff)]; // pass iterable(array) into a set, and then unpack the entire set to create an array based on that set, so these elements from the set would be unpacked as if they were an individual elements separated by commas
-// so if a certain data structure is an iterable, that means that we can use "spread operator" and "for of" loop for example, and also in a specific situation we would use the rest pattern along with spread operator maybe
+const staffUnique = [...new Set(staff)]; // pass iterable(array) into a set, and then unpack the entire set to create an array based on that set
+
+// so if a certain data structure is an iterable, that means that we can use "spread operator" and "for of" loop, and also in a specific situation we would use the rest pattern along with spread operator
 console.log(staffUnique);
 
 // the same could even be done with counting how many different letters there are in a string, because string is also an iterable;
@@ -130,7 +187,8 @@ const teacher = new Set('Jonas');
 console.log(teacher); // it looks familiar to what did with strings by using spread operator
 console.log(teacher.size);
 
-// So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays, that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique and it's also very easy to interact with sets by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values, but besides(помимо, кроме того) that, you can just continue using arrays;
+// So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays, that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique and it's also very easy to interact with (sets) by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values, but besides(помимо, кроме того) that, you can just continue using arrays;
+*/
 
 /*
 //////////////////////////////////////////////////////
