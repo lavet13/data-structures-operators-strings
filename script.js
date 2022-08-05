@@ -74,16 +74,77 @@ const restaurant = {
 };
 
 //////////////////////////////////////////////////////
+// Maps(Iteration)
+
+const question = new Map([
+  ['question', 'What is the best programming language in the world'],
+  [1, 'C'],
+  [2, 'Java'],
+  [3, 'JavaScript'],
+  ['correct', 3],
+  [true, 'Correct 🎉'],
+  [false, 'Try again! 😁'],
+]);
+
+for (let value of question.keys()) {
+  console.log(value);
+}
+
+for (const value of question.values()) {
+  console.log(value);
+}
+
+// convert object to map
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+console.log(hoursMap);
+
+// i have no clue why do i need entries method in map data structure, it's similar as below(Quiz app), but again why though
+// key value pair
+for (let array of question.entries()) {
+  console.log(array);
+}
+
+// Quiz app
+console.log(question.get('question'));
+for (const [key, value] of question) {
+  // we wouldn't need any method as for example entries, because object literals aren't iterables, maps - iterable
+  if (typeof key === 'number') console.log(`Answer: ${key}: ${value}`);
+}
+
+// const answer = Number(prompt('Your answer'));
+const answer = 3;
+console.log(question.get(answer));
+
+console.log(question.get(question.get('correct') === answer)); // so we get boolean value, and we are getting value from that particular key which is whether it's gonna be true or false
+
+// convert map back to an array
+const array = [...question];
+console.log(array);
+
+const obj = array.reduce((previousValue, [key, value]) => {
+  return Object.assign(previousValue, { [key]: value });
+}, {});
+console.log(obj);
+
+console.log([...question]);
+console.log([...question.entries()]); // no point to use entries
+console.log([...question.keys()]);
+console.log([...question.values()]);
+
+/*
+//////////////////////////////////////////////////////
 // Maps(Fundamentals)
 
 // a map is a data structure that we can use to map values to keys, so just like an object, data is stored in key value pairs in maps, the big diff between objects and maps is that in maps, the keys can have any type and this can be huge, basically in objects we always have string as a property, but in maps we can have any type of key such as objects, arrays, or other maps.
+
 
 const rest = new Map();
 rest.set('name', 'Classico Italiano');
 rest.set(1, 'Firenze, Italy');
 console.log(rest.set(4, 'Lisbon, Portugal'));
 
-// as rest returns updated map, we can use chaining
+// since a rest returns updated map, we can use chaining
 rest
   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
   .set('open', 11)
@@ -104,8 +165,8 @@ console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // f
 // as with sets we have the same method 'has'
 console.log(rest.has('categories')); // true, so we trying to find element based on the key, and it returns boolean value, objects do also have a method which is called hasOwnProperty
 
-// Now comparing to objects we can actually delete properties from objects using something called "delete" operator but, that's a really slow process and usually it's not encouraged to do that.
-console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not
+// Now comparing to objects(object literals) we can actually delete properties from objects using something called "delete" operator but, that's a really slow process and usually it's not encouraged to do that.
+console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not, and of course it delete it
 // rest.clear(); // remove all the elements from the map
 
 const arr = [1, 2]; // now it's gonna work because it's contain address of the array in the heap
@@ -116,8 +177,9 @@ rest.set(document.querySelector('h1'), 'Heading');
 console.log(rest);
 console.log(rest.size);
 
-console.log(rest.get(arr)); // undefined, the reason is that these two arrays are actually not the same object
+console.log(rest.get(arr)); // it could be undefined if we didn't specify variable that contains address of the array that would point to the one in the heap
 
+*/
 // as always it's an iterable so we can use for of loop and spread operator
 // for (let value of rest) {
 //   console.log(value);
@@ -128,7 +190,7 @@ console.log(rest.get(arr)); // undefined, the reason is that these two arrays ar
 // Sets (ESX, two more data structures were finally introduced and that are sets and maps(in another lecture))
 // a set is basically just a collection of unique values, so that means that a set can never have any duplicates.
 
-// NOTE: so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings
+// NOTE: so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings already
 
 // Iterables are arrays, strings, maps and sets, but NOT objects
 // we need to pass iterables in our set
@@ -161,7 +223,7 @@ for (const order of ordersSet) {
   console.log(order);
 }
 
-// doesn't work i mean it didn't even entry the "for in" loop, even though it didn't come out with error
+// doesn't work i mean it didn't even entry the "for in" loop
 for (const order in ordersSet) {
   console.log(order, ordersSet[order]);
 }
@@ -175,7 +237,7 @@ console.log(staff);
 // the conversion from a set to an array is pretty easy, because they're both iterables, so remember from earlier that the spread operator works on all iterables, so that includes sets
 const staffUnique = [...new Set(staff)]; // pass iterable(array) into a set, and then unpack the entire set to create an array based on that set
 
-// so if a certain data structure is an iterable, that means that we can use "spread operator" and "for of" loop, and also in a specific situation we would use the rest pattern along with spread operator
+// so if a certain data structure is an iterable, that means that we can use "spread operator" and "for of" loop
 console.log(staffUnique);
 
 // the same could even be done with counting how many different letters there are in a string, because string is also an iterable;
