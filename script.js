@@ -86,14 +86,6 @@ const question = new Map([
   [false, 'Try again! 😁'],
 ]);
 
-for (let value of question.keys()) {
-  console.log(value);
-}
-
-for (const value of question.values()) {
-  console.log(value);
-}
-
 // convert object to map
 console.log(Object.entries(openingHours));
 const hoursMap = new Map(Object.entries(openingHours));
@@ -108,7 +100,8 @@ for (let array of question.entries()) {
 // Quiz app
 console.log(question.get('question'));
 for (const [key, value] of question) {
-  // we wouldn't need any method as for example entries, because object literals aren't iterables, maps - iterable
+  // we wouldn't need any method as for example entries(seems not to be any changes), and also because object literals aren't iterables, maps - iterable
+  // analogy of that is an array.entries()
   if (typeof key === 'number') console.log(`Answer: ${key}: ${value}`);
 }
 
@@ -125,10 +118,11 @@ console.log(array);
 const obj = array.reduce((previousValue, [key, value]) => {
   return Object.assign(previousValue, { [key]: value });
 }, {});
+
 console.log(obj);
 
 console.log([...question]);
-console.log([...question.entries()]); // no point to use entries
+console.log([...question.entries()]); // no point to use entries, except that returns Map Iterator, but the whole picture didn't change lulw
 console.log([...question.keys()]);
 console.log([...question.values()]);
 
@@ -166,7 +160,7 @@ console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // f
 console.log(rest.has('categories')); // true, so we trying to find element based on the key, and it returns boolean value, objects do also have a method which is called hasOwnProperty
 
 // Now comparing to objects(object literals) we can actually delete properties from objects using something called "delete" operator but, that's a really slow process and usually it's not encouraged to do that.
-console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not, and of course it delete it
+console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not
 // rest.clear(); // remove all the elements from the map
 
 const arr = [1, 2]; // now it's gonna work because it's contain address of the array in the heap
@@ -272,16 +266,28 @@ const values = Object.values(openingHours);
 console.log(values);
 
 // Entire Object
-const entries = Object.entries(openingHours);
+let entries = Object.entries(openingHours);
+console.log(entries);
+
+entries = entries.filter(x => {
+  if (
+    x.includes(undefined) ||
+    x.includes(null) ||
+    x.includes(0) ||
+    x.includes('')
+  )
+    return false;
+
+  return true;
+});
+
 console.log(entries);
 
 for (let x of entries) {
-  // actually why did i write this
-  x = x.filter(value => {
-    if (value === 0) return true;
-    return value ?? false;
-  });
-  // no idea...
+  // x = x.filter(value => {
+  //   if (value === 0) return true;
+  //   return value ?? false;
+  // });
 
   const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
   if (!value) continue; // because you can't destructure object if it not an object at all, like in my case i had zero and null
@@ -332,7 +338,7 @@ const users = [{ email: 'hello@jonas.io' }];
 
 console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 
-// if (users.length > 0) console.log(users[0].name ?? "Property doesn't exist");
+// if (users.length > 0) console.log(users[0].name ?? "Property's value doesn't exist");
 // else console.log('User array empty');
 */
 ///////////////////////////////////////////
@@ -345,7 +351,7 @@ console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 /*
 ///////////////////////////////////////////
 // ES6 for of loop
-
+*/
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 // we can still use the continue and break keywords
@@ -354,14 +360,21 @@ for (const item of menu) console.log(item);
 // for (const array of menu.entries()) console.log(array);
 
 for (const [key, value] of menu.entries()) {
-  // Array Iterator is a menu.entries(), which has arrays that contain the index with the value in the array element itself, so it obviously to use destructure assignment
+  // menu.entries() is an Array Iterator, which has array that contains the index with the value, so it obviously to use destructure assignment
   console.log(`${key + 1}: ${value}`);
 }
+
+const testArr = menu.entries();
+console.log(testArr); // Array Iterator, so we have access to next, return, throw;
+console.log(testArr.next().value); // value is an array, so actually it's simple to use destructure assignment
+console.log(testArr.next().value);
+console.log(testArr.next().value);
 
 console.log(...menu.entries()); // get individual elements from Array Iterator object, similar to "for of" loop
 console.log([...menu.entries()]);
 console.log(Object.fromEntries([...menu.entries()])); // convert to object
-*/
+/*
+ */
 
 /*
 ///////////////////////////////////////////
@@ -388,7 +401,7 @@ const rest2 = {
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string).
+rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so that currently doesn't exist(so null or undefined, not a zero and empty string, which are exist)).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
@@ -397,7 +410,7 @@ rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will a
 // AND assignment operator
 // so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical add assignment operator
 // FIXME try to create a property with value of undefined or null, test it
-// SOLVE so if it exists and also has a value of null or undefined it will simply be reassigned or won't do anything
+// SOLVE so if it exists, then it will be reassigned, but if it's not exist, then wouldn't do anything
 rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
 rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical AND assignment operator does is to assign a value to a variable if it is currently truthy
 
