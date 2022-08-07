@@ -75,6 +75,8 @@ const restaurant = {
 
 //////////////////////////////////////////////////////
 // Maps(Iteration)
+// FIXME check if "for in" loop works
+// SOLVE 
 
 const question = new Map([
   ['question', 'What is the best programming language in the world'],
