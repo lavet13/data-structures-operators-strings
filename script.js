@@ -73,10 +73,11 @@ const restaurant = {
   },
 };
 
+/*
 //////////////////////////////////////////////////////
 // Maps(Iteration)
 // FIXME check if "for in" loop works
-// SOLVE 
+// SOLVE didn't work
 
 const question = new Map([
   ['question', 'What is the best programming language in the world'],
@@ -88,12 +89,17 @@ const question = new Map([
   [false, 'Try again! 😁'],
 ]);
 
+for (let index in question) {
+  // seemed not to work at all
+  console.log(index, question[index]);
+}
+
 // convert object to map
 console.log(Object.entries(openingHours));
 const hoursMap = new Map(Object.entries(openingHours));
 console.log(hoursMap);
 
-// i have no clue why do i need entries method in map data structure, it's similar as below(Quiz app), but again why though
+// i have no clue why do i need entries method in map data structure, it's similar as below(Quiz app), but we can use Map Iterator which sometimes can be useful
 // key value pair
 for (let array of question.entries()) {
   console.log(array);
@@ -101,6 +107,7 @@ for (let array of question.entries()) {
 
 // Quiz app
 console.log(question.get('question'));
+
 for (const [key, value] of question) {
   // we wouldn't need any method as for example entries(seems not to be any changes), and also because object literals aren't iterables, maps - iterable
   // analogy of that is an array.entries()
@@ -127,6 +134,7 @@ console.log([...question]);
 console.log([...question.entries()]); // no point to use entries, except that returns Map Iterator, but the whole picture didn't change lulw
 console.log([...question.keys()]);
 console.log([...question.values()]);
+*/
 
 /*
 //////////////////////////////////////////////////////
@@ -176,7 +184,7 @@ console.log(rest.size);
 console.log(rest.get(arr)); // it could be undefined if we didn't specify variable that contains address of the array that would point to the one in the heap
 
 */
-// as always it's an iterable so we can use for of loop and spread operator
+// as always it's an iterable so we can use "for of" loop and spread operator
 // for (let value of rest) {
 //   console.log(value);
 // }
@@ -353,7 +361,6 @@ console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 /*
 ///////////////////////////////////////////
 // ES6 for of loop
-*/
 const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
 
 // we can still use the continue and break keywords
@@ -375,8 +382,15 @@ console.log(testArr.next().value);
 console.log(...menu.entries()); // get individual elements from Array Iterator object, similar to "for of" loop
 console.log([...menu.entries()]);
 console.log(Object.fromEntries([...menu.entries()])); // convert to object
-/*
- */
+
+// polyfill for fromEntries method
+console.log(
+  menu.reduce((previousValue, currentValue, index) => {
+    return Object.assign(previousValue, { [index]: currentValue });
+  }, {})
+);
+
+*/
 
 /*
 ///////////////////////////////////////////
