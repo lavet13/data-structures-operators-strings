@@ -73,6 +73,28 @@ const restaurant = {
   },
 };
 
+//////////////////////////////////////////////////////
+// Summary Which Data Structure to Use
+/*
+
+in JavaScript there are built-in data structures WeakMap and WeakSet in JavaScript;
+
+Other Data Structures that are not build-in JavaScript these can be stacks, queues, linked lists, trees or hash tables
+
+we should use arrays, sets for simple lists of values, when we don't need to describe the values;
+
+we should use arrays whenever you need to store values in order and when these values might contain duplicates, and also you should always use arrays when you need to manipulate data because there are a ton of useful array methods;
+
+you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
+
+we should use objects and maps(key value data structures) whenever we need to describe the values using keys, right?
+but when to use objects and when to use maps?
+
+Well, objects have been traditional key value data structure simply because we didn't have maps before ES6, but using objects simply as key value stores has a couple of technical disadvantages, and that's why some people say that we've been abusing objects for this;
+
+Now maps on the other hand are way better suited, for simple key value stores because they offer better performance in fact, also map keys can have any data type and they're also easy to iterate and it's easy to compute the size of a map, however the biggest advantage of objects is probably how easy it is to write them and to access data by simply using the dot or the brackets operator, also most developers are already super used to objects and so they simply keep using them for simply key value stores, anyway as a conclusion you should use maps when you simply need to map keys to values and also when you need keys that are not strings, because that can be very powerful sometimes, now if you need functions as values then you should absolutely use an object for that, so in objects these functions are then called methods and you can use the this keyword to access properties of the same object, which is impossible in maps, also when working with JSON data, you will probably be using objects for that as well, unless you then want to convert the objects to maps, but that's usually not something that we do, so in fact, we still use objects all the time, but maps are also a very important data structure right now, and way more important than sets;
+*/
+
 /*
 //////////////////////////////////////////////////////
 // Maps(Iteration)
