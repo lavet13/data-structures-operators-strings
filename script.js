@@ -170,7 +170,7 @@ rest.set('name', 'Classico Italiano');
 rest.set(1, 'Firenze, Italy');
 console.log(rest.set(4, 'Lisbon, Portugal'));
 
-// since a rest returns updated map, we can use chaining
+// since a set method returns updated map, we can use chaining
 rest
   .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
   .set('open', 11)
@@ -249,12 +249,13 @@ for (const order of ordersSet) {
   console.log(order);
 }
 
+// SOLVE
 // doesn't work i mean it didn't even entry the "for in" loop
 for (const order in ordersSet) {
   console.log(order, ordersSet[order]);
 }
 
-// big use case for them, so in a normal code base, the main use case of sets is actually to remove duplicate values of arrays;
+// so in a normal code base, the main use case of sets is actually to remove duplicate values of arrays;
 // EXAMPLE
 const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']; // basically an iterable
 // for some reason, we are interested in knowing only which different positions there are in our restaurant, or in other words, we would basically like to have a unique values of the array, so without all the duplicates;
@@ -318,7 +319,7 @@ console.log(entries);
 for (let x of entries) {
   // x = x.filter(value => {
   //   if (value === 0) return true;
-  //   return value ?? false;
+  //   return value ?? false; // implicitly change type of a variable to boolean
   // });
 
   const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
@@ -342,7 +343,7 @@ if (restaurant.openingHours && restaurant.openingHours.mon)
 // WITH optional chaining
 console.log(restaurant.openingHours.mon?.open); // nullish concept, a property exists if it's not null and not undefined, so if it's zero or the empty string then it still exists of course;
 console.log(restaurant.openingHours?.mon?.open);
-console.log(restaurant.openingHours.deb?.open); // checks the property before question mark (?.), if it doesn't exist it should returns an UNDEFINED, as if it was short circuiting, otherwise it goes after question mark and do whatever it is, calling a method or just sets a property or returns one
+console.log(restaurant.openingHours.deb?.open); // checks the property before question mark (?.), if it doesn't exist it should returns an UNDEFINED, otherwise it goes after question mark and do whatever it is, calling a method or just sets a property or returns one
 
 // Example
 const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
@@ -391,7 +392,7 @@ for (const item of menu) console.log(item);
 // for (const array of menu.entries()) console.log(array);
 
 for (const [key, value] of menu.entries()) {
-  // menu.entries() is an Array Iterator, which has array that contains the index with the value, so it obviously to use destructure assignment
+  // menu.entries() is an Array Iterator(which has next method), which has array that contains the index with the value, so it obviously to use destructure assignment
   console.log(`${key + 1}: ${value}`);
 }
 
@@ -410,7 +411,7 @@ console.log(
   menu.reduce((previousValue, currentValue, index) => {
     return Object.assign(previousValue, { [index]: currentValue });
   }, {})
-);
+); // almost forgot that reduce doesn't return an array, instead it returns computed previousValue variable
 
 */
 
@@ -439,14 +440,14 @@ const rest2 = {
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so that currently doesn't exist(so null or undefined, not a zero and empty string, which are exist)).
+rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so that currently doesn't exist(so null or undefined, not a zero and empty string which are exist)).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
 // rest2.owner = rest2.owner && '<ANONYMOUS>';
 
 // AND assignment operator
-// so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical add assignment operator
+// so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical and assignment operator
 // FIXME try to create a property with value of undefined or null, test it
 // SOLVE so if it exists, then it will be reassigned, but if it's not exist, then wouldn't do anything
 rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
