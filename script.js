@@ -72,7 +72,134 @@ const restaurant = {
     return 1;
   },
 };
+//////////////////////////////////////////////////////
+// Working With Strings - Part 2
 
+const airline = 'TAP Air Portugal';
+
+// doesn't require any arguments
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+console.log('jonas'.toUpperCase());
+
+// Fix capitalization in name
+const passengerCapitalization = function (passenger) {
+  const passengerLower = passenger.toLowerCase();
+  return passengerLower[0].toUpperCase() + passengerLower.slice(1);
+};
+
+const passengerCorrect = passengerCapitalization('jOnAs');
+console.log(passengerCorrect);
+
+// Comparing email
+const compareEmails = function (email1, email2) {
+  return email1.toLowerCase().trim() === email2.toLowerCase().trim();
+};
+
+const email = 'hello@jonas.io';
+const loginEmail = '  Hello@Jonas.iO \n';
+
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+// console.log(trimmedEmail);
+
+// const normalizedEmail = loginEmail.toLowerCase().trim();
+// console.log(normalizedEmail);
+// console.log(email === normalizedEmail);
+
+console.log(compareEmails(email, loginEmail));
+
+// https://stackoverflow.com/questions/6507056/replace-all-whitespace-characters
+
+// since ES2019 trimStart and trimEnd, to trim only from the start or only from the end
+
+// replacing (case sensitive)
+const priceRUB = '288,97rub';
+const priceUS = priceRUB.replace('rub', '$').replace(',', '.');
+
+console.log(priceUS);
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23!';
+
+// console.log(announcement.replace('door', 'gate'));
+// console.log(announcement.replaceAll('door', 'gate'));
+
+console.log(announcement.replace(/door/g, 'gate'));
+
+// Booleans
+const plane = 'Airbus A320neo';
+console.log(plane.includes('A320'));
+console.log(plane.includes('Boeing'));
+
+console.log(plane.startsWith('Air'));
+
+if (plane.startsWith('Airbus') && plane.endsWith('neo'))
+  console.log('Part of the NEW Airbus family');
+
+// Practical exercise
+const checkBaggage = function (items) {
+  // make sure that everything into a lowercase, because it makes a lot easier to compare to something
+  const baggage = items.toLowerCase();
+
+  if (baggage.includes('knife') || baggage.includes('gun')) {
+    console.log('You are NOT allowed on board');
+  } else {
+    console.log('Welcome aboard!');
+  }
+};
+
+checkBaggage('I have a laptop, some Food and a pocket knife');
+checkBaggage('Socks and camera');
+checkBaggage('Got some snacks and a gun for protection');
+
+/*
+//////////////////////////////////////////////////////
+// Working With Strings - Part 1
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log(plane[1]);
+console.log(plane[2]);
+console.log('B737'[0]);
+
+console.log(airline.length);
+console.log('B737'.length);
+
+console.log(airline.indexOf('r'));
+console.log(airline.lastIndexOf('r'));
+console.log(airline.indexOf('Portugal')); // case sensitive
+
+// returns new string
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7)); // it stops extracting before reaching index number 7, and so the length of the extracting string is always going to be end minus beginning, so 7 - 4 = 3, so 3 is the length
+
+console.log(airline.slice(0, airline.indexOf(' ')));
+console.log(airline.slice(airline.lastIndexOf(' ') + 1));
+
+console.log(airline.slice(-2));
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s = seat.slice(-1);
+  if (s === 'B' || s === 'E') {
+    console.log('You got the middle seat');
+  } else console.log('You got lucky');
+};
+
+checkMiddleSeat('11B'); // check if string contains a B or an E
+checkMiddleSeat('23C');
+checkMiddleSeat('3E');
+// Whenever we call a method on a string, JavaScript will automatically behind the scenes convert that string primitive to a string object with the same content, and then it's on that object where the methods are called, and this process is called boxing because it basically takes our string and puts it into a box which is the object
+
+console.log(new String('jonas'));
+console.log(typeof new String('jonas')); // object
+// this conversion is what JavaScript does behind the scenes whenever we call a method on a string, and then when the operation is done, the object is converted back to a regular string primitive, and in fact all string methods return primitives, even if called on a string object
+
+console.log(typeof new String('jonas').slice(0)); // result of the slice method is the string primitive
+*/
 //////////////////////////////////////////////////////
 // Summary Which Data Structure to Use
 /*
