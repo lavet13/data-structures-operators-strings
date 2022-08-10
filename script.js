@@ -72,6 +72,66 @@ const restaurant = {
     return 1;
   },
 };
+
+/*
+//////////////////////////////////////////////////////
+// Working With Strings - Part 3
+
+// Split and Join
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+console.log(firstName, lastName);
+
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+const capitalizeName = function (string) {
+  let names = string.split(' ');
+
+  names = names.map(name => {
+    // return name[0].toUpperCase() + name.slice(1);
+    return name.replace(name[0], name[0].toUpperCase());
+  });
+
+  return names.join(' ');
+};
+
+console.log(capitalizeName('jessica ann smith davis'));
+console.log(capitalizeName('ivan skinder'));
+
+// Padding
+const message = 'Go to gate 23!';
+console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be as a result, after that padEnd method is called and it then going to add some more pluses to the end of the string, because we padded until the length of 30
+console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+
+// Practical Example
+const maskCreditCard = function (number) {
+  const str = number + '';
+  const fourDigit = str.slice(-4);
+
+  return fourDigit.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(43215678));
+console.log(maskCreditCard(4237947392847));
+console.log(maskCreditCard('84798327498237498322731283712'));
+
+// Repeat
+const message2 = 'Bad weather... All Departures Delayed... ';
+console.log(message2.repeat(5).trim());
+
+const planesInLine = function (number) {
+  console.log(`There are ${number} planes in line ${'✈'.repeat(number)}`);
+};
+
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+*/
+
+/*
 //////////////////////////////////////////////////////
 // Working With Strings - Part 2
 
@@ -115,7 +175,7 @@ console.log(compareEmails(email, loginEmail));
 
 // replacing (case sensitive)
 const priceRUB = '288,97rub';
-const priceUS = priceRUB.replace('rub', '$').replace(',', '.');
+const priceUS = priceRUB.replace('rub', '$').replace(',', '.'); // returns new string so we can do chaining
 
 console.log(priceUS);
 
@@ -152,6 +212,7 @@ const checkBaggage = function (items) {
 checkBaggage('I have a laptop, some Food and a pocket knife');
 checkBaggage('Socks and camera');
 checkBaggage('Got some snacks and a gun for protection');
+*/
 
 /*
 //////////////////////////////////////////////////////
@@ -212,7 +273,7 @@ we should use arrays, sets for simple lists of values, when we don't need to des
 
 we should use arrays whenever you need to store values in order and when these values might contain duplicates, and also you should always use arrays when you need to manipulate data because there are a ton of useful array methods;
 
-you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
+you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also sets can store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
 
 we should use objects and maps(key value data structures) whenever we need to describe the values using keys, right?
 but when to use objects and when to use maps?
@@ -258,7 +319,7 @@ for (let array of question.entries()) {
 console.log(question.get('question'));
 
 for (const [key, value] of question) {
-  // we wouldn't need any method as for example entries(seems not to be any changes), and also because object literals aren't iterables, maps - iterable
+  // we wouldn't need any method as for example entries, and also because object literals aren't iterables, maps - iterable
   // analogy of that is an array.entries()
   if (typeof key === 'number') console.log(`Answer: ${key}: ${value}`);
 }
@@ -279,7 +340,7 @@ const obj = array.reduce((previousValue, [key, value]) => {
 
 console.log(obj);
 
-console.log([...question]);
+console.log([...question]); // that's anology would be like [...array.values() - which can be written also like array]
 console.log([...question.entries()]); // no point to use entries, except that returns Map Iterator, but the whole picture didn't change lulw
 console.log([...question.keys()]);
 console.log([...question.values()]);
@@ -445,6 +506,7 @@ console.log(entries);
 
 for (let x of entries) {
   // x = x.filter(value => {
+  // FIXME what is this? value === 0?
   //   if (value === 0) return true;
   //   return value ?? false; // implicitly change type of a variable to boolean
   // });
@@ -567,7 +629,7 @@ const rest2 = {
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so that currently doesn't exist(so null or undefined, not a zero and empty string which are exist)).
+rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
