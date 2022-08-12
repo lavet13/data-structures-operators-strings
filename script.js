@@ -75,6 +75,33 @@ const restaurant = {
 
 /*
 //////////////////////////////////////////////////////
+// String Methods Practice
+
+const getCode = str => str.replace(/[0-9]/g, '').toUpperCase();
+let outputs = [];
+
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(';');
+
+  outputs.push(
+    `${type.startsWith('_Delayed') ? '¯_(ツ)_/¯ ' : ''}${type
+      .replace(/_/g, ' ')
+      .trim()} from ${getCode(from)} to ${getCode(to)} (${time.replace(
+      ':',
+      'h'
+    )})`.trim()
+  );
+}
+
+for (const i in outputs) {
+  console.log(
+    +i !== 0 ? outputs[i].padStart(outputs[i - 1].length + 1) : outputs[i]
+  );
+}
+*/
+
+/*
+//////////////////////////////////////////////////////
 // Working With Strings - Part 3
 
 // Split and Join
@@ -103,7 +130,7 @@ console.log(capitalizeName('ivan skinder'));
 
 // Padding
 const message = 'Go to gate 23!';
-console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be as a result, after that padEnd method is called and it then going to add some more pluses to the end of the string, because we padded until the length of 30
+console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be the new string as a result, after that padEnd method is called and it then going to add some more pluses to the end of the string, because we padded until the length of 30
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
 
 // Practical Example
