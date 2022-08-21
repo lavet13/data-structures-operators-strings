@@ -130,7 +130,7 @@ console.log(capitalizeName('ivan skinder'));
 
 // Padding
 const message = 'Go to gate 23!';
-console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be the new string as a result, after that padEnd method is called and it then going to add some more pluses to the end of the string, because we padded until the length of 30
+console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be the new string as a result, after that padEnd method is called and it then going to add 10 pluses to the end of the string, because we padded until the length of 30
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
 
 // Practical Example
@@ -261,13 +261,13 @@ console.log(airline.indexOf('Portugal')); // case sensitive
 
 // returns new string
 console.log(airline.slice(4));
-console.log(airline.slice(4, 7)); // it stops extracting before reaching index number 7, and so the length of the extracting string is always going to be end minus beginning, so 7 - 4 = 3, so 3 is the length
+console.log(airline.slice(4, 7)); // it stops extracting before reaching index number 7, so doesn't include actually 7, and so the length of the extracting string is always going to be end minus beginning, so 7 - 4 = 3, so 3 is the length
 
 console.log(airline.slice(0, airline.indexOf(' ')));
 console.log(airline.slice(airline.lastIndexOf(' ') + 1));
 
-console.log(airline.slice(-2));
-console.log(airline.slice(1, -1));
+console.log(airline.slice(-2)); // two last elements from original array to a new array would be got
+console.log(airline.slice(1, -1)); // first and last elements didn't include in a new array
 
 const checkMiddleSeat = function (seat) {
   // B and E are middle seats
@@ -361,11 +361,41 @@ console.log(question.get(question.get('correct') === answer)); // so we get bool
 const array = [...question];
 console.log(array);
 
+// https://github.com/tc39/proposal-object-from-entries
 const obj = array.reduce((previousValue, [key, value]) => {
   return Object.assign(previousValue, { [key]: value });
 }, {});
 
+let obj = { abc: 1, def: 2, ghij: 3 };
+let res = Object.entries(obj)
+    .filter(([key]) => key.length === 3)
+    .map(([key, value]) => [key, value * 2]).reduce((acc, [key, value]) => {
+        return Object.assign(acc, {[key]: value});
+    }, {});
+// more convenient way to write is to use Object.fromEntries
+res = Object.fromEntries(
+  Object.entries(obj)
+  .filter(([ key, val ]) => key.length === 3)
+  .map(([ key, val ]) => [ key, val * 2 ])
+);
+
+
+// and some additional stuff is that don't forget to use Array.from() to your map and set data structure, for instance:
+map = new Map().set('foo', true).set('bar', false);
+arr = Array.from(map);
+set = new Set(map.values()); // if it was array, we could simply use map for that to get rid of keys, i mean get rid of first value in array element itself
+
+obj = { foo: true, bar: false };
+map = new Map(Object.entries(obj));
+obj = Array.from(map).reduce((acc, [ key, val ]) => Object.assign(acc, { [key]: val }), {});
+
 console.log(obj);
+
+// another example
+let sum = [{x: 1}, {x:2}, {x:3}].reduce(function (accumulator, currentValue) {
+    // return (accumulator.x ? accumulator.x : accumulator) + currentValue.x;
+    return (accumulator.x ?? accumulator) + currentValue.x; // stops when it finds truthy value, so it nullish concept if it null or undefined it goes to the second operand
+}); // so without initialValue, it still doable 
 
 console.log([...question]); // that's anology would be like [...array.values() - which can be written also like array]
 console.log([...question.entries()]); // no point to use entries, except that returns Map Iterator, but the whole picture didn't change lulw
@@ -404,7 +434,7 @@ const time = 10;
 console.log(rest.get(time > rest.get('open') && time < rest.get('close'))); // first and second operands are booleans, so entire result of this OR operation will be either true or false
 
 // as with sets we have the same method 'has'
-console.log(rest.has('categories')); // true, so we trying to find element based on the key, and it returns boolean value, objects do also have a method which is called hasOwnProperty
+console.log(rest.has('categories')); // true, - so we trying to find element based on the key, and it returns boolean value, objects do also have a method which is called hasOwnProperty
 
 // Now comparing to objects(object literals) we can actually delete properties from objects using something called "delete" operator but, that's a really slow process and usually it's not encouraged to do that.
 console.log(rest.delete(4)); // again based on the key, it returns true if it was deleted or false if it's not
@@ -431,7 +461,7 @@ console.log(rest.get(arr)); // it could be undefined if we didn't specify variab
 // Sets (ESX, two more data structures were finally introduced and that are sets and maps(in another lecture))
 // a set is basically just a collection of unique values, so that means that a set can never have any duplicates.
 
-// NOTE: so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings already
+// NOTE: so we can only create objects based on existing object if you are using spread operator, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings already
 
 // Iterables are arrays, strings, maps and sets, but NOT objects
 // we need to pass iterables in our set
@@ -488,7 +518,7 @@ console.log(new Set('jonasschmedtmann').size); // 11 unique characters
 
 const teacher = new Set('Jonas');
 
-console.log(teacher); // it looks familiar to what did with strings by using spread operator
+console.log(teacher); // it looks familiar to what did with strings by using spread operator, but not similar, subtle difference, there are only unique values, so they aren't identically equal
 console.log(teacher.size);
 
 // So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays, that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique and it's also very easy to interact with (sets) by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values, but besides(помимо, кроме того) that, you can just continue using arrays;
@@ -531,21 +561,22 @@ entries = entries.filter(x => {
 
 console.log(entries);
 
-for (let x of entries) {
-  // x = x.filter(value => {
-  // FIXME what is this? value === 0?
-  //   if (value === 0) return true;
-  //   return value ?? false; // implicitly change type of a variable to boolean
-  // });
+// for (let x of entries) {
+//   // x = x.filter(value => {
+//   //   // FIXME what is this? value === 0?
+//   //   if (value === 0) return true; // SOLVE because 0 is returned, and filter method interpreted like a falsy value
+//   //   return value ?? false; // implicitly change type of a variable to boolean
+//   // });
+//   // console.log(x);
 
-  const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
-  if (!value) continue; // because you can't destructure object if it not an object at all, like in my case i had zero and null
+//   const [key, value] = x; // you could also do "const [key, {open, close}] = x;"
+//   if (!value) continue; // SOLVE because you can't destructure object if it not an object at all, like in my case i had zero and null
 
-  const { open, close } = value;
+//   const { open, close } = value;
 
-  console.log(`On ${key} we open at ${open} and close at ${close}`);
-}
- */
+//   console.log(`On ${key} we open at ${open} and close at ${close}`);
+// }
+*/
 
 /*
 ///////////////////////////////////////////
@@ -572,8 +603,8 @@ for (const day of days) {
 
   // open || console.log(`On ${day}, we open at ${open}`); // it's also try to catch 0 and empty string along with undefined and null
 
-  // !open || console.log(`On ${day}, we open at ${open}`); // this is similar as beneath here
-  open && console.log(`On ${day}, we open at ${open}`);
+  // !open || console.log(`On ${day}, we open at ${open}`); // this is similar as beneath here, so it looks for falsy values, because we're inverting the operation "!open || ..." as if it was AND operator
+  open && console.log(`On ${day}, we open at ${open}`); // stops when it finds falsy value
   open === 0 && console.log(`On ${day}, we open at ${open}`);
 }
 
@@ -583,6 +614,14 @@ console.log(restaurant.orderRisotto?.(0, 0) ?? 'Method does not exist');
 
 // Optional Chaining WITH Arrays
 const users = [{ email: 'hello@jonas.io' }];
+
+// convert objects into an array key pairs
+users.map((o) => {
+    const [[key, value]] = Object.entries(o); // nested array
+    console.log(key, value);
+    return [key, value];
+})
+
 // const users = []; // Empty array
 
 console.log(users[1]?.name ?? "User array empty or property doesn't exist");
@@ -593,9 +632,9 @@ console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 ///////////////////////////////////////////
 // Enhanced Object literals
 
-// ES6 enhanced object literals(SOLVE First enhancement)
+// ES6 enhanced object literals(SOLVE First enhancement) implicitly takes a variable name and set it to property name so to say
 // ES6 writing methods(SOLVE Second enhancement) which allows us to instead of creating a property and set it to a function expression just write a method as if we would create one in a class (ES6)
-// ES6 compute property names instead of having to write them out manually and literally. (SOLVE Third enhancement)
+// ES6 compute property names by using bracket notation, instead of having to write them out manually and literally. (SOLVE Third enhancement)
 
 /*
 ///////////////////////////////////////////
@@ -618,7 +657,7 @@ console.log(testArr.next().value); // value is an array, so actually it's simple
 console.log(testArr.next().value);
 console.log(testArr.next().value);
 
-console.log(...menu.entries()); // get individual elements from Array Iterator object, similar to "for of" loop
+console.log(...menu.entries()); // get individual elements from Array Iterator object, similar to "for of" loop, spread operator i forgor that is used with entries method holyyyy
 console.log([...menu.entries()]);
 console.log(Object.fromEntries([...menu.entries()])); // convert to object
 
@@ -627,7 +666,7 @@ console.log(
   menu.reduce((previousValue, currentValue, index) => {
     return Object.assign(previousValue, { [index]: currentValue });
   }, {})
-); // almost forgot that reduce doesn't return an array, instead it returns computed previousValue variable
+); // almost forgot that reduce doesn't return an array, instead it returns computed previousValue variable which is an object literal essentially that initially gotten by the second operand and accumulates by the result of callback function
 
 */
 
@@ -656,7 +695,7 @@ const rest2 = {
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
+rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
@@ -664,10 +703,10 @@ rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will a
 
 // AND assignment operator
 // so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical and assignment operator
-// FIXME try to create a property with value of undefined or null, test it
-// SOLVE so if it exists, then it will be reassigned, but if it's not exist, then wouldn't do anything
+
+// SOLVE so if it exists, then it will simply be reassigned, but if it's not exist, then wouldn't do anything
 rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
-rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical AND assignment operator does is to assign a value to a variable if it is currently truthy
+rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical AND assignment operator does is to assign a value to a variable if it is currently truthy, and it treats a zero and empty string as they are falsy value
 
 console.log(rest1);
 console.log(rest2);
@@ -782,16 +821,23 @@ console.log(number1, number2);
 console.log(number1, number2);
 
 const obj = { a: 1, b: 2, c: { d: 3, e: 4 } };
-({ asdf: number1 = 999, b: number2 = 999 } = obj);
+({ a: number1 = 999, b: number2 = 999 } = obj);
 console.log(number1, number2);
 
 // 2) Functions(with REST PATTERN)
 // WITH ARRAYS
 const add = function (...array) {
-  console.log(array);
-  return array.reduce((previous, current) => {
-    return previous + current;
-  });
+  // https://stackoverflow.com/questions/767486/how-do-i-check-if-a-variable-is-an-array-in-javascript
+  if (array[0] instanceof Array) {
+    // SOLVE make sure that first value is an array
+    return array[0].reduce((previous, current) => {
+      return previous + current;
+    });
+  } else {
+    return array.reduce((previous, current) => {
+      return previous + current;
+    });
+  }
 };
 
 // SOLVE rest pattern is still an array, in case with functions, but in destructuring assignment it will be either array or object, depending on what we are currently using
@@ -801,11 +847,11 @@ const testObj = {
   c: 4,
 };
 
-// console.log(add(2, 3));
+console.log(add(2, 3));
 // console.log(add(5, 3, 7, 2));
 // console.log(add(8, 2, 5, 3, 2, 1, 4));
-// console.log(add([1, 2, 3]));
-add(...testObj); // so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings, also we have maps and sets but we don't even know what exactly they are LULE.
+console.log(add([1, 2, 3])); // array.reduce - keep in mind that
+add(...testObj); // so we can only create objects based on existing object, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings, also we have maps and sets but we don't even know what exactly they are LULE. SOLVE Uncaught TypeError: Found non-callable @@iterator
 
 const x = [23, 5, 7];
 add(...x);
@@ -829,9 +875,13 @@ console.log(...newArray); // it logged the individual elements of the array.
 const newMenu = [...restaurant.mainMenu, 'Gnocci'];
 console.log(newMenu);
 
-//
+
 //https://www.freecodecamp.org/news/how-to-clone-an-array-in-javascript-1d3183468f6a/
-//
+// SOLVE it receives any iterable object and turn it into an array
+let string = "test";
+console.log(Array.from(string));
+console.log([...string]);
+
 // Copy arrays(shallow copy), and it's a bit similar to object.assign that we used in the previous section
 const mainMenuCopy = [...restaurant.mainMenu];
 console.log(mainMenuCopy);
@@ -936,20 +986,20 @@ const { menu = [], starterMenu: starters = [] } = restaurant;
 console.log(menu, starters);
 
 // Mutating variables
-let a = 111;
-let b = 999;
+let number1 = 111;
+let number2 = 999;
 const obj = { a: 23, b: 7, c: 14 };
 
 // override these two inital variables, but in order to do it
 // we had to wrap this destructuring assignment into parenthesis;
-({ a = 2, b = 2 } = obj);
-console.log(a, b);
+({ a: number1 = 2, b: number2 = 2 } = obj);
+console.log(number1, number2);
 
 // Nested Objects
-const {
-  fri: { open: o = 0, close: c = 0 },
-} = openingHours;
-console.log(o, c);
+// const {
+//   fri: { open: o = 0, close: c = 0 },
+// } = openingHours;
+// console.log(o, c);
 */
 
 /*
