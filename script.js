@@ -303,7 +303,7 @@ we should use arrays whenever you need to store values in order and when these v
 
 you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also sets can store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
 
-we should use objects and maps(key value data structures) whenever we need to describe the values using keys, right?
+we should use objects and maps(key value pairs data structures) whenever we need to describe the values using keys, right?
 but when to use objects and when to use maps?
 
 Well, objects have been traditional key value data structure simply because we didn't have maps before ES6, but using objects simply as key value stores has a couple of technical disadvantages, and that's why some people say that we've been abusing objects for this;
@@ -347,7 +347,7 @@ for (let array of question.entries()) {
 console.log(question.get('question'));
 
 for (const [key, value] of question) {
-  // we wouldn't need any method as for example entries, and also because object literals aren't iterables, maps - iterable
+  // we wouldn't need any method as for example entries, and also because object literals(Object.entries(o)) aren't iterables, maps - iterable
   // analogy of that is an array.entries()
   if (typeof key === 'number') console.log(`Answer: ${key}: ${value}`);
 }
@@ -359,7 +359,7 @@ console.log(question.get(answer));
 console.log(question.get(question.get('correct') === answer)); // so we get boolean value, and we are getting value from that particular key which is whether it's gonna be true or false
 
 // convert map back to an array
-const array = [...question];
+const array = [...question]; // Array.from(question)
 console.log(array);
 
 // https://github.com/tc39/proposal-object-from-entries
@@ -398,7 +398,7 @@ let sum = [{x: 1}, {x:2}, {x:3}].reduce(function (accumulator, currentValue) {
     return (accumulator.x ?? accumulator) + currentValue.x; // stops when it finds truthy value, so it nullish concept if it null or undefined it goes to the second operand
 }); // so without initialValue, it still doable 
 
-console.log([...question]); // that's anology would be like [...array.values() - which can be written also like array]
+console.log([...question]);
 console.log([...question.entries()]); // no point to use entries, except that returns Map Iterator, but the whole picture didn't change lulw
 console.log([...question.keys()]);
 console.log([...question.values()]);
@@ -479,7 +479,7 @@ console.log(ordersSet);
 console.log(ordersSet.size); // 3 unique values
 console.log(ordersSet.has('Pasta')); // true
 console.log(ordersSet.has('Bread')); // false
-ordersSet.add('Garlic Bread');
+ordersSet.add('Garlic Bread'); // updated set is returned, we can use chain for that
 ordersSet.add('Garlic Bread'); // the second will be ignored
 ordersSet.delete('Risotto'); // deleting Risotto
 // ordersSet.clear(); // delete all elements of a set
@@ -616,7 +616,7 @@ console.log(restaurant.orderRisotto?.(0, 0) ?? 'Method does not exist');
 // Optional Chaining WITH Arrays
 const users = [{ email: 'hello@jonas.io' }];
 
-// convert objects into an array key pairs
+// SOLVE convert objects into an array key pairs
 users.map((o) => {
     const [[key, value]] = Object.entries(o); // nested array
     console.log(key, value);
@@ -696,7 +696,7 @@ const rest2 = {
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
+rest2.numGuests ??= 10; // stops and returns when it finds truthy value(so it didn't reassign variable), the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
@@ -706,7 +706,7 @@ rest2.numGuests ??= 10; // in a nutshell, the nullish assignment operator will a
 // so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical and assignment operator
 
 // SOLVE so if it exists, then it will simply be reassigned, but if it's not exist, then wouldn't do anything
-rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which returned an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
+rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which assign to the property an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
 rest2.owner &&= '<ANONYMOUS>'; // so basically, what the logical AND assignment operator does is to assign a value to a variable if it is currently truthy, and it treats a zero and empty string as they are falsy value
 
 console.log(rest1);
