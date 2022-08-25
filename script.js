@@ -132,6 +132,7 @@ console.log(capitalizeName('ivan skinder'));
 const message = 'Go to gate 23!';
 console.log(message.padStart(20, '+').padEnd(30, '+')); // so 20 length should be the new string as a result, after that padEnd method is called and it then going to add 10 pluses to the end of the string, because we padded until the length of 30
 console.log('Jonas'.padStart(20, '+').padEnd(30, '+'));
+// 'asdf'.padStart(10).padEnd('asdf'.padStart(10).length - 'asdf'.length + 10)
 
 // Practical Example
 const maskCreditCard = function (number) {
