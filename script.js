@@ -465,7 +465,7 @@ console.log(rest.get(arr)); // it could be undefined if we didn't specify variab
 // NOTE: so we can only create objects based on existing object if you are using spread operator, and that's all (-_-'), and because it's not iterable, you cannot pass object into a function by using spread operator as we did with arrays, strings already
 
 // Iterables are arrays, strings, maps and sets, but NOT objects
-// we need to pass iterables in our set
+// we need to pass iterables in our set, array a good one
 const ordersSet = new Set([
   'Pasta',
   'Pizza',
@@ -490,7 +490,7 @@ console.log(ordersSet);
 
 // if your goal is to actually store values in order and then retrieve it, then the best use case, is to just use an array, you wouldn't use a set for that and so again, there's no need for getting values out of a set, because if you need it, then you will just use an array;
 
-// so as he said in the beginning, sets are also iterables, and therefore we can loop over them;
+// so as he said in the beginning, sets are also iterables, and therefore we can loop over them, and use spread operator :D;
 for (const order of ordersSet) {
   console.log(order);
 }
