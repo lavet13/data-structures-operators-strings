@@ -565,7 +565,7 @@ console.log(entries);
 // for (let x of entries) {
 //   // x = x.filter(value => {
 //   //   // FIXME what is this? value === 0?
-//   //   if (value === 0) return true; // SOLVE because 0 is returned, and filter method interpreted like a falsy value
+//   //   if (value === 0) return true; // SOLVE because 0 is returned, and filter method is interpreted like a falsy value
 //   //   return value ?? false; // implicitly change type of a variable to boolean
 //   // });
 //   // console.log(x);
@@ -689,21 +689,21 @@ const rest2 = {
 // OR assignment operator
 // rest2.numGuests = rest2.numGuests ? rest2.numGuests : 10;
 
-// rest1.numGuests = rest1.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for ADD operator - falsy value
-// rest2.numGuests = rest2.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for ADD operator - falsy value
+// rest1.numGuests = rest1.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for AND operator - falsy value
+// rest2.numGuests = rest2.numGuests || 10; // stops and returns when it finds truthy value in case OR operator, for AND operator - falsy value
 // rest1.numGuests ||= 10;
 // rest2.numGuests ||= 10;
 
 // Nullish assignment operator (null or undefined)
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // stops and returns when it finds truthy value(so it didn't reassign variable), the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
+rest2.numGuests ??= 10; // stops and returns when it finds truthy value(so didn't it reassign variable??), the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
 // rest2.owner = rest2.owner && '<ANONYMOUS>';
 
 // AND assignment operator
-// so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, then you can use logical and assignment operator
+// so if i ever need to assign a value to a variable that is already defined, so that has a value that is currently truthy, and means is that it wouldn't reassign a value if there is zero or empty string then you can use logical and assignment operator
 
 // SOLVE so if it exists, then it will simply be reassigned, but if it's not exist, then wouldn't do anything
 rest1.owner &&= '<ANONYMOUS>'; // fixes the result of AND operator which assign to the property an undefined if it didn't find a property and instead of it actually didn't create a property with value, even though it had to do so
