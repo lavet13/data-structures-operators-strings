@@ -299,7 +299,8 @@ Other Data Structures that are not build-in JavaScript these can be stacks, queu
 
 we should use arrays, sets for simple lists of values, when we don't need to describe the values;
 
-we should use arrays whenever you need to store values in order and when these values might contain duplicates, and also you should always use arrays when you need to manipulate data because there are a ton of useful array methods;
+we should use arrays whenever you need to store values in order and when these values might contain duplicates, and also you should always use arrays when you need to manipulate data
+because there are a ton of useful array methods;
 
 you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also sets can store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
 
