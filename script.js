@@ -302,14 +302,23 @@ we should use arrays, sets for simple lists of values, when we don't need to des
 we should use arrays whenever you need to store values in order and when these values might contain duplicates, and also you should always use arrays when you need to manipulate data
 because there are a ton of useful array methods;
 
-you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, and also sets can store unique values, Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays but rather to compliment them whenever we are dealing with unique values;
+you can use sets in situations when high performance is really important because operations like searching for an item or deleting an item from a set can be up to 10 times faster in sets than in arrays, 
+and also sets can store unique values. Now one great use case for sets is to remove duplicate values from an array, like we already did before, so sets are really not meant to replace arrays 
+but rather to compliment them whenever we are dealing with unique values;
 
 we should use objects and maps(key value pairs data structures) whenever we need to describe the values using keys, right?
 but when to use objects and when to use maps?
 
-Well, objects have been traditional key value data structure simply because we didn't have maps before ES6, but using objects simply as key value stores has a couple of technical disadvantages, and that's why some people say that we've been abusing objects for this;
+Well, objects have been traditional key value data structure simply because we didn't have maps before ES6, but using objects simply as key value stores has a couple of technical disadvantages,
+and that's why some people say that we've been abusing objects for this;
 
-Now maps on the other hand are way better suited, for simple key value stores because they offer better performance in fact, also map keys can have any data type and they're also easy to iterate and it's easy to compute the size of a map, however the biggest advantage of objects is probably how easy it is to write them and to access data by simply using the dot or the brackets operator, also most developers are already super used to objects and so they simply keep using them for simply key value stores, anyway as a conclusion you should use maps when you simply need to map keys to values and also when you need keys that are not strings, because that can be very powerful sometimes, now if you need functions as values then you should absolutely use an object for that, so in objects these functions are then called methods and you can use the "this" keyword to access properties of the same object, which is impossible in maps, also when working with JSON data, you will probably be using objects for that as well, unless you then want to convert the objects to maps, but that's usually not something that we do, so in fact, we still use objects all the time, but maps are also a very important data structure right now, and way more important than sets;
+Now maps on the other hand are way better suited, for simple key value stores because they offer better performance in fact, also map keys can have any data type and they're also easy to iterate 
+and it's easy to compute the size of a map, however the biggest advantage of objects is probably how easy it is to write them and to access data by simply using the dot or the brackets operator,
+also most developers are already super used to objects and so they simply keep using them for simply key value stores, anyway as a conclusion you should use maps when you simply need to map keys to values 
+and also when you need keys that are not strings, because that can be very powerful sometimes, now if you need functions as values then you should absolutely use an object for that, so in objects these functions 
+are then called methods and you can use the "this" keyword to access properties of the same object, which is impossible in maps, also when working with JSON data, you will probably be using objects for that as well,
+unless you then want to convert the objects to maps, but that's usually not something that we do, so in fact, we still use objects all the time, but maps are also a very important data structure right now, and way more
+important than sets;
 */
 
 /*
@@ -487,9 +496,11 @@ ordersSet.delete('Risotto'); // deleting Risotto
 console.log(ordersSet);
 // in sets there are actually no indexes;
 // and in fact, there is no way of getting values out of a set, and if we think about this, then it makes sense;
-// so there's really no need for getting data out of a set. That's because if all values are unique, and if their order does not matter, then there is no point of retrieving values out of a set, all we need to know is whether a certain value is in the set or not;
+// so there's really no need for getting data out of a set. That's because if all values are unique, and if their
+// order does not matter, then there is no point of retrieving values out of a set, all we need to know is whether a certain value is in the set or not;
 
-// if your goal is to actually store values in order and then retrieve it, then the best use case, is to just use an array, you wouldn't use a set for that and so again, there's no need for getting values out of a set, because if you need it, then you will just use an array;
+// if your goal is to actually store values in order and then retrieve it, then the best use case, is to just use an array, you wouldn't use a set for that and so again,
+// there's no need for getting values out of a set, because if you need it, then you will just use an array;
 
 // so as he said in the beginning, sets are also iterables, and therefore we can loop over them, and use spread operator :D;
 for (const order of ordersSet) {
@@ -523,7 +534,10 @@ const teacher = new Set('Jonas');
 console.log(teacher); // it looks familiar to what did with strings by using spread operator, but not similar, subtle difference, there are only unique values, so they aren't identically equal
 console.log(teacher.size);
 
-// So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays, that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique and it's also very easy to interact with (sets) by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values, but besides(помимо, кроме того) that, you can just continue using arrays;
+// So as a conclusion, sets are not intended to replace arrays at all, so whenever you need to store values in order, and that might contain duplicates, always just use arrays,
+// that's also true when you need to really manipulate data, because arrays have access to a lot of great array methods, now sets have this very useful property of being unique 
+// and it's also very easy to interact with (sets) by using all of their straightforward methods, however they are not nearly as important as arrays, so keep sets in mind when you need to work with unique values,
+// but besides(помимо, кроме того) that, you can just continue using arrays;
 */
 
 /*
@@ -565,9 +579,7 @@ console.log(entries);
 
 // for (let x of entries) {
 //   // x = x.filter(value => {
-//   //   // FIXME what is this? value === 0?
-//   //   if (value === 0) return true; // SOLVE because 0 is returned, and filter method is interpreted like a falsy value
-//   //   return value ?? false; // implicitly change type of a variable to boolean
+//   //   return value ?? 0; // implicitly change type of a variable to boolean
 //   // });
 //   // console.log(x);
 
