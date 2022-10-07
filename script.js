@@ -646,7 +646,7 @@ console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 ///////////////////////////////////////////
 // Enhanced Object literals
 
-// ES6 enhanced object literals(SOLVE First enhancement) implicitly takes a variable name and set it to property name so to say
+// ES6 enhanced object literals(SOLVE First enhancement) implicitly takes a variable name and set that variable's name as for a property so to say
 // ES6 writing methods(SOLVE Second enhancement) which allows us to instead of creating a property and set it to a function expression just write a method as if we would create one in a class (ES6)
 // ES6 compute property names by using bracket notation, instead of having to write them out manually and literally. (SOLVE Third enhancement)
 
