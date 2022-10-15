@@ -172,7 +172,7 @@ console.log('jonas'.toUpperCase());
 
 // Fix capitalization in name
 const passengerCapitalization = function (passenger) {
-  const passengerLower = passenger.toLowerCase();
+  const passengerLower = passenger.toLowerCase().trim();
   return passengerLower[0].toUpperCase() + passengerLower.slice(1);
 };
 
@@ -357,7 +357,7 @@ for (let array of question.entries()) {
 console.log(question.get('question'));
 
 for (const [key, value] of question) {
-  // we wouldn't need any method as for example entries, and also because object literals(Object.entries(o)) aren't iterables, maps - iterable
+  // we wouldn't need any method as for example entries (also object literals(Object.entries(o)) aren't iterables, maps - iterable)
   // analogy of that is an array.entries()
   if (typeof key === 'number') console.log(`Answer: ${key}: ${value}`);
 }
@@ -646,7 +646,7 @@ console.log(users[1]?.name ?? "User array empty or property doesn't exist");
 ///////////////////////////////////////////
 // Enhanced Object literals
 
-// ES6 enhanced object literals(SOLVE First enhancement) implicitly takes a variable name and set that variable's name as for a property so to say
+// ES6 enhanced object literals(SOLVE First enhancement) implicitly takes a variable name and set that variable's name as a property for our object
 // ES6 writing methods(SOLVE Second enhancement) which allows us to instead of creating a property and set it to a function expression just write a method as if we would create one in a class (ES6)
 // ES6 compute property names by using bracket notation, instead of having to write them out manually and literally. (SOLVE Third enhancement)
 
@@ -707,9 +707,9 @@ const rest2 = {
 // rest1.numGuests ||= 10;
 // rest2.numGuests ||= 10;
 
-// Nullish assignment operator (null or undefined)
+// Nullish assignment operator (null or undefined) it reassign the value of the variable if the variable doesn't exist
 rest1.numGuests ??= 10;
-rest2.numGuests ??= 10; // stops and returns when it finds truthy value(so didn't it reassign variable??), the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
+rest2.numGuests ??= 10; // stops and returns when it finds truthy value, the nullish assignment operator will assign a value(10) to a variable if that exact variable is currently nullish(so null or undefined, not a zero and empty string which are exist).
 
 // AND operator
 // rest1.owner = rest1.owner && '<ANONYMOUS>';
